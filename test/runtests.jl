@@ -1,6 +1,7 @@
 using SentinelDataSource
 using Test
 using Aqua
+using Zarr
 
 @testset "SentinelDataSource.jl" begin
     @testset "Code quality (Aqua.jl)" begin
