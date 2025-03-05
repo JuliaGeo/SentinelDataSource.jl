@@ -31,7 +31,7 @@ using Zarr
     end
     @testset "S2 L2A MSI" begin
         s2l2apath = "https://objectstore.eodc.eu:2222/e05ab01a9d56408d82ac32d69a5aae2a:sample-data/tutorial_data/cpm_v253/S2A_MSIL2A_20240101T102431_N0510_R065_T32TNT_20240101T144052.zarr"
-        @test s2l2a = zopen(s2l2apath) isa Zgroup
+        @test s2l2a = zopen(s2l2apath) isa ZGroup
     end
 end
     
