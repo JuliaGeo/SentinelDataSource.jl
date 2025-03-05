@@ -1,0 +1,7 @@
+name = "SentinelDataSource"
+uuid = "afd1bdb2-e5b9-463c-8ecd-ef9b9458f1b0"
+authors = ["Felix Cremer <fcremer@bgc-jena.mpg.de> and contributors"]
+version = "0.1.0-DEV"
+
+[compat]
+julia = "1.6.7"
