@@ -3,5 +3,11 @@ uuid = "afd1bdb2-e5b9-463c-8ecd-ef9b9458f1b0"
 authors = ["Felix Cremer <fcremer@bgc-jena.mpg.de> and contributors"]
 version = "0.1.0-DEV"
 
+[deps]
+DimensionalData = "0703355e-b756-11e9-17c0-8b28908087d0"
+Zarr = "0a941bbe-ad1d-11e8-39d9-ab76183a1d99"
+
 [compat]
+DimensionalData = "0.29.12"
+Zarr = "0.9.4"
 julia = "1.6.7"
