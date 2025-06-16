@@ -3,6 +3,7 @@ using DimensionalData: DimTree
 using Zarr: zopen
 using ZarrDatasets: ZarrDataset
 using CommonDataModel: CommonDataModel as CDM
+using Rasters:Raster
 
 function open_eopf(path)
     zd = ZarrDataset(path)
@@ -17,17 +18,17 @@ function open_tree(dataset)
     alldimnames = nesteddimnames(dataset)
     for v in setdiff(varnames, alldimnames)
         @show v
-        setproperty!(stem, Symbol(v), Raster(CDM.variable(dataset, v), lazy=true))
+        setindex!(stem, Raster(CDM.variable(dataset, v), lazy=true),Symbol(v))
     end
     for g in groupnames
-        setproperty!(stem, Symbol(g), open_tree(CDM.group(dataset, g)))
+        setindex!(stem,  open_tree(CDM.group(dataset, g)),Symbol(g))
     end
     stem
 end
 #zopen()
 # Write your package code here.
 
-end
+
 
 function nesteddimnames(zarrdataset)
     alldims = []
@@ -35,4 +36,6 @@ function nesteddimnames(zarrdataset)
         append!(alldims, CDM.dimnames(CDM.variable(zarrdataset, v)))
     end
     unique(alldims)
+end
+
 end
