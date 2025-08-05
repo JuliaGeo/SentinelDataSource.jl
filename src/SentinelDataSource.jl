@@ -17,7 +17,6 @@ function open_tree(dataset)
     varnames = CDM.varnames(dataset)
     alldimnames = nesteddimnames(dataset)
     for v in setdiff(varnames, alldimnames)
-        @show v
         setindex!(stem, Raster(CDM.variable(dataset, v), lazy=true),Symbol(v))
     end
     for g in groupnames
@@ -25,9 +24,6 @@ function open_tree(dataset)
     end
     stem
 end
-#zopen()
-# Write your package code here.
-
 
 
 function nesteddimnames(zarrdataset)
