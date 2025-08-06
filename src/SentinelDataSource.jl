@@ -5,6 +5,8 @@ using ZarrDatasets: ZarrDataset
 using CommonDataModel: CommonDataModel as CDM
 using Rasters:Raster
 
+export open_tree
+
 open_tree(path::AbstractString) = open_tree(ZarrDataset(path))
 
 function open_tree(dataset::ZarrDataset)

@@ -4,6 +4,7 @@ authors = ["Felix Cremer <fcremer@bgc-jena.mpg.de> and contributors"]
 version = "0.1.0-DEV"
 
 [deps]
+CFTime = "179af706-886a-5703-950a-314cd64e0468"
 CommonDataModel = "1fbeeb36-5f17-413c-809b-666fb144f157"
 DimensionalData = "0703355e-b756-11e9-17c0-8b28908087d0"
 DiskArrayTools = "fcd2136c-9f69-4db6-97e5-f31981721d63"
@@ -15,6 +16,7 @@ Zarr = "0a941bbe-ad1d-11e8-39d9-ab76183a1d99"
 ZarrDatasets = "519a4cdf-1362-424a-9ea1-b1d782dbb24b"
 
 [compat]
+CFTime = "0.2.1"
 CommonDataModel = "0.3.8"
 DimensionalData = "0.29.12"
 DiskArrayTools = "0.1.12"
