@@ -5,13 +5,9 @@ using ZarrDatasets: ZarrDataset
 using CommonDataModel: CommonDataModel as CDM
 using Rasters:Raster
 
-function open_eopf(path)
-    zd = ZarrDataset(path)
-    eopfstem = DimTree()
-    eopfstem.measurements = DimTree()
-end
+open_tree(path::AbstractString) = open_tree(ZarrDataset(path))
 
-function open_tree(dataset)
+function open_tree(dataset::ZarrDataset)
     stem = DimTree()
     groupnames = CDM.groupnames(dataset)
     varnames = CDM.varnames(dataset)
