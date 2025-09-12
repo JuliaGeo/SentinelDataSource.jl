@@ -15,7 +15,7 @@ Zarr = "0a941bbe-ad1d-11e8-39d9-ab76183a1d99"
 ZarrDatasets = "519a4cdf-1362-424a-9ea1-b1d782dbb24b"
 
 [compat]
-CommonDataModel = "0.3.8"
+CommonDataModel = "0.3.8, 0.4"
 DimensionalData = "0.29.12"
 DiskArrayTools = "0.1.12"
 DiskArrays = "0.4.11"
