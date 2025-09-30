@@ -7,18 +7,20 @@ using Rasters:Raster
 
 export open_tree
 
-open_tree(path::AbstractString) = open_tree(ZarrDataset(path))
+open_tree(path::AbstractString;kwargs...) = open_tree(ZarrDataset(path);kwargs...)
 
-function open_tree(dataset::ZarrDataset)
+function open_tree(dataset; prefer_datetime=true)
     stem = DimTree()
     groupnames = CDM.groupnames(dataset)
     varnames = CDM.varnames(dataset)
     alldimnames = nesteddimnames(dataset)
+    @show varnames
     for v in setdiff(varnames, alldimnames)
-        setindex!(stem, Raster(CDM.variable(dataset, v), lazy=true),Symbol(v))
+        r = Raster(CDM.variable(dataset, v); lazy=true, prefer_datetime)
+        setindex!(stem, r,Symbol(v))
     end
     for g in groupnames
-        setindex!(stem,  open_tree(CDM.group(dataset, g)),Symbol(g))
+        setindex!(stem,  open_tree(CDM.group(dataset, g);prefer_datetime),Symbol(g))
     end
     stem
 end

@@ -1,0 +1,57 @@
+# Introduction to the SentinelDataSource julia package
+
+A user friendly way to open the EOPF Zarr products in Julia.
+
+
+## Introduction
+
+SentinelDataSource is a julia package that extends the DimensionalData.jl ecosystem to enable seamless access to ESA EOPF data products stored in the Zarr format. 
+This notebook demonstrates how to use SentinelDataSource.jl to explore and analyse EOPF Zarr datasets. 
+It highlights the key features currently supported. 
+
+## Install SentinelDataSource.jl
+
+To install the SentinelDataSource.jl package use the julia package manager. 
+
+In the julia REPL first press `]` to enter the pkg mode and then do
+
+```
+add SentinelDataSource
+```
+
+This will install SentinelDataSource into your current environment. 
+
+## Import Modules
+
+```{julia}
+using Pkg
+Pkg.activate(".")
+Pkg.instantiate()
+```
+
+```{julia}
+using SentinelDataSource: SentinelDataSource as SDS
+using ZarrDatasets
+```
+
+
+# Open the product in Native Mode
+
+## Sentinel-2 Level-2A
+
+```{julia}
+path ="https://objectstore.eodc.eu:2222/e05ab01a9d56408d82ac32d69a5aae2a:202505-s02msil2a/18/products/cpm_v256/S2B_MSIL2A_20250518T112119_N0511_R037_T29RLL_20250518T140519.zarr"
+```
+
+```{julia}
+dt = SDS.open_tree(path)
+```
+
+```{julia}
+dt.quality.l2a_quicklook.r60m[:tci]
+```
+
+```{julia}
+using GLMakie
+plot()
+```
