@@ -4,4 +4,6 @@
 [![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 
 
-This project provides easy to use access to the new EOPF Zarr Sentinel ESA Remote Sensing data. 
+This project provides easy to use access to the new EOPF Zarr Sentinel ESA Remote Sensing data in Julia.
+To open a EOPF Zarr dataset use the open_tree function. 
+
