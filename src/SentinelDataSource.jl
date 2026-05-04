@@ -1,30 +1,38 @@
 module SentinelDataSource
-using DimensionalData: DimTree, DimArray
+using DimensionalData: DimTree, DimArray, DimensionalData
 using Zarr: zopen
 using ZarrDatasets: ZarrDataset
 using CommonDataModel: CommonDataModel as CDM
 using Rasters: Rasters
-
+using TimerOutputs
 export open_tree
 
 open_tree(path::AbstractString) = open_tree(ZarrDataset(path))
 
 function open_tree(dataset::ZarrDataset)
-    @time "stem" stem = DimTree()
-    @time "groups" groupnames = CDM.groupnames(dataset)
-    @time "vars" varnames = CDM.varnames(dataset)
-    @time "dims" alldimnames = nesteddimnames(dataset)
-    @time "forvar" for v in setdiff(varnames, alldimnames)
-        @time "var" var = CDM.variable(dataset, v)
-        @time "vardims" vardims = Rasters._dims(var)
-        @time "meta" metadata_out = Rasters._metadata(var)
-        @time "missing" missingval_out = Rasters._read_missingval_pair(var, metadata_out, Rasters.nokw)
-        @time "mod" mod = Rasters._mod(eltype(var), metadata_out, missingval_out;scaled=true, coerce=true)
-        @time "vardata" vardata = Rasters._maybe_modify(var, mod)
-        @time "set" setindex!(stem, DimArray(vardata, vardims),Symbol(v))
+    @timeit_debug "stem" stem = DimTree()
+    @timeit_debug "groups" groupnames = CDM.groupnames(dataset)
+    @timeit_debug "vars" varnames = CDM.varnames(dataset)
+    @timeit_debug "dims" alldimnames = nesteddimnames(dataset)
+    diffnames = setdiff(varnames, alldimnames)
+    for v in diffnames
+        @timeit_debug "var $v" begin
+        var = CDM.variable(dataset, v)
+        vardims = Rasters._dims(var)
+        metadata_out = Rasters._metadata(var)
+        missingval_out = Rasters._read_missingval_pair(var, metadata_out, Rasters.nokw)
+        mod = Rasters._mod(eltype(var), metadata_out, missingval_out;scaled=true, coerce=true)
+        #=
+        Rasters.FileArray{ZarrDataset}(var, filename;
+                name=v, Rasters.nokw, mod, write=false
+            )
+                =#
+        vardata = Rasters._maybe_modify(var, mod)
+        setindex!(stem, DimArray(vardata, vardims),Symbol(v))
+        end
     end
-    @time "forg" for g in groupnames
-        setindex!(stem,  open_tree(CDM.group(dataset, g)),Symbol(g))
+    for g in groupnames
+        @timeit_debug "forg $g"    setindex!(stem,  open_tree(CDM.group(dataset, g)),Symbol(g))
     end
     stem
 end
