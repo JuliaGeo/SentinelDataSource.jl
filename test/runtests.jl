@@ -11,7 +11,7 @@ using DimensionalData
     # Write your tests here.
 
     @testset "S1 L1 GRD" begin
-        s1grdpath = "https://objectstore.eodc.eu:2222/e05ab01a9d56408d82ac32d69a5aae2a:sample-data/tutorial_data/cpm_v253/S1A_IW_GRDH_1SDV_20240201T164915_20240201T164940_052368_065517_750E.zarr"
+        s1grdpath = "https://objects.eodc.eu/e05ab01a9d56408d82ac32d69a5aae2a:202606-s01siwgrh-eu/05/products/cpm_v270/S1A_IW_GRDH_1SDV_20260605T060752_20260605T060817_064830_082B3C_B31B.zarr"
         s1grdtree = open_tree(s1grdpath)
         @test s1grdtree isa DimTree
     end
